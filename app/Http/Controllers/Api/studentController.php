@@ -11,10 +11,16 @@ class studentController extends Controller
     //
     public function createStudent(Request $request)
     {   
-        // methods: create(), all(), findOrFall(), update(), delete()
+        // methods: create(), all(), find(), update(), delete()
+        $validateData = $request->validate([
+            'firstName'=> 'required|string|max:255',
+            'lastName'=> 'required|string|max:255',
+            'location'=> 'required|string|max:255',
+            'phoneNumber'=> 'required|string|min:11|max:11',
+        ]);
 
-        $student = Student::create($request->all());
-
+        $student = Student::create($validateData);
+        
         if ($student) {
             return response()->json([
                 'message' => 'Student created successfully',
@@ -23,7 +29,6 @@ class studentController extends Controller
         } else {
              return response()->json([
                 'message' => 'Something went wrong',
-                'data' => 'error'
             ], 500);
         }
         
@@ -32,7 +37,7 @@ class studentController extends Controller
     public function getAllStudents() {
         $students = Student::all();
 
-        if ($students) {
+        if ($students->count() > 0) {
             return response()->json([
                 'message' => 'Students retrieved successfully',
                 'data' => $students
@@ -40,14 +45,13 @@ class studentController extends Controller
     } else {
         return response()->json([
             'message' => 'Student not found',
-            'data' => 'error'
-        ], 500);
+        ], 404);
     }
     }
 
     public function getAStudent($id)
     {
-       $student = Student::findOrFail($id);
+       $student = Student::find($id);
         if ($student) {
             return response()->json([
                 'message' => 'Student retrieved successfully',
@@ -56,7 +60,6 @@ class studentController extends Controller
     } else {
         return response()->json([
             'message' => 'Student not found',
-            // 'data' => 'error'
         ], 404);
     }
     }
@@ -74,7 +77,6 @@ class studentController extends Controller
     } else {
         return response()->json([
             'message' => 'Student not found',
-            // 'data' => 'error'
         ], 404);
     }
 
@@ -93,7 +95,6 @@ class studentController extends Controller
     } else {
         return response()->json([
             'message' => 'Student not found',
-            // 'data' => 'error'
         ], 404);
     }
 

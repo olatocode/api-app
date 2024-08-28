@@ -1,8 +1,12 @@
 <?php
 
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\authController;
 use App\Http\Controllers\Api\studentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +22,20 @@ use App\Http\Controllers\Api\studentController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::post('/register', [authController::class, 'register']);
+Route::post('/login', [authController::class, 'login']);
 
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
 Route::post('/students', [studentController::class, 'createStudent']);
-Route::get('/students', [studentController::class, 'getAllStudents']);
 Route::get('/students/{id}', [studentController::class, 'getAStudent']);
 Route::put('/students/{id}', [studentController::class, 'updateAStudent']);
 Route::delete('/students/{id}', [studentController::class, 'deleteAStudent']);
+Route::get('/students', [studentController::class, 'getAllStudents']);
+});
+
 
 
 
