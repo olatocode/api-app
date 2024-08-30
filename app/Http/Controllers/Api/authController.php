@@ -56,4 +56,23 @@ class authController extends Controller
     ],
      200);
     }
+
+    public function logout(Request $request)
+    {
+      $user = User::where('id', $request->user()->id)->first();
+      $user->tokens()->delete();
+      
+      if ($user) {
+            return response()->json([
+                'message' => 'Logout successful',
+            ], 201);
+        } else {
+             return response()->json([
+                'message' => 'Something went wrong',
+            ], 500);
+        }
+
+    }
+
+     
 }

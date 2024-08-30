@@ -5,6 +5,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\authController;
+use App\Http\Controllers\Api\userController;
 use App\Http\Controllers\Api\studentController;
 
 
@@ -29,11 +30,16 @@ Route::post('/login', [authController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
+// student
 Route::post('/students', [studentController::class, 'createStudent']);
 Route::get('/students/{id}', [studentController::class, 'getAStudent']);
 Route::put('/students/{id}', [studentController::class, 'updateAStudent']);
 Route::delete('/students/{id}', [studentController::class, 'deleteAStudent']);
 Route::get('/students', [studentController::class, 'getAllStudents']);
+
+// user profile
+Route::get('/profile', [userController::class, 'profile']);
+Route::post('/logout', [authController::class, 'logout']);
 });
 
 
