@@ -15,7 +15,7 @@ class studentController extends Controller
         $validateData = $request->validate([
             'firstName'=> 'required|string|max:255',
             'lastName'=> 'required|string|max:255',
-            'location'=> 'required|string|max:255',
+            'course'=> 'required|string|max:255',
             'phoneNumber'=> 'required|string|min:11|max:11',
         ]);
 
@@ -33,6 +33,8 @@ class studentController extends Controller
         }
         
     }
+
+
 
     public function getAllStudents() {
         $students = Student::all();

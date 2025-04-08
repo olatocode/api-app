@@ -25,8 +25,8 @@ use App\Http\Controllers\Api\studentController;
 // });
 Route::post('/register', [authController::class, 'register']);
 Route::post('/login', [authController::class, 'login']);
-
-
+Route::delete('/users/{id}', [authController::class, 'deleteUser']);
+Route::get('/users', [authController::class, 'getAllUsers']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
